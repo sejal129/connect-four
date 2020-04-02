@@ -13,12 +13,11 @@ function reportWin(rowNum, colNum){
   console.log(colNum);
 }
 
-function changeColor(rowIndex,colIndex,color) {
+function changeColor(rowIndex, colIndex, color){
   return table.eq(rowIndex).find('td').eq(colIndex).find('button').css('background-color',color);
 }
 
-// Report Back to current color of a button
-function returnColor(rowIndex,colIndex) {
+function returnColor(rowIndex, colIndex){
   return table.eq(rowIndex).find('td').eq(colIndex).find('button').css('background-color');
 }
 
@@ -27,7 +26,6 @@ function checkBottom(colIndex){
   console.log(colorReport);
   for (var row = 5; row > -1; row--) {
     colorReport=returnColor(row,colIndex);
-    console.log(colorReport);
     if(colorReport === 'rgb(128, 128, 128)'){
       return row
     }
