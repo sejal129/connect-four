@@ -13,14 +13,18 @@ function reportWin(rowNum, colNum){
   console.log(colNum);
 }
 
+//Change the colour of the button
 function changeColor(rowIndex, colIndex, color){
+  //Grab a particulat cell and change the color
   return table.eq(rowIndex).find('td').eq(colIndex).find('button').css('background-color',color);
 }
 
+//Report back to current colour of the button
 function returnColor(rowIndex, colIndex){
   return table.eq(rowIndex).find('td').eq(colIndex).find('button').css('background-color');
 }
 
+//Take in column index, returns the bottom row that is still gray
 function checkBottom(colIndex){
   var colorReport=returnColor(5,colIndex);
   console.log(colorReport);
@@ -32,10 +36,12 @@ function checkBottom(colIndex){
   }
 }
 
+//Chcek to see if 4 inpts are the same color
 function colorMatchCheck(one,two,three,four){
   return (one===two && one===three && one===four && one!=='rgb(128, 128, 128)' && one!==undefined)
 }
 
+//Check for horizontal wins
 function horizontalWinCheck(){
   for (var row = 0; row < 6; row++) {
     for (var col = 0; col < 4; col++) {
@@ -51,6 +57,7 @@ function horizontalWinCheck(){
   }
 }
 
+//Check for vertical wins
 function verticalWinCheck(){
   for (var col = 0; col < 7; col++) {
     for (var row = 0; row < 3; row++) {
@@ -66,6 +73,7 @@ function verticalWinCheck(){
   }
 }
 
+//Check for diagonal wins
 function diagonalWinCheck(){
   for (var col = 0; col < 5; col++) {
     for (var row = 0; row < 7; row++) {
@@ -86,6 +94,8 @@ function diagonalWinCheck(){
   }
 }
 
+
+//Game end
 function gameEnd(winningPlayer) {
   for (var col = 0; col < 7; col++) {
     for (var row = 0; row < 7; row++) {
@@ -96,24 +106,37 @@ function gameEnd(winningPlayer) {
   }
 }
 
+//Start with player one
 var currentPlayer=1;
 var currentName=player1;
 var currentColor=player1Color;
 
+
+//Start with player one
 $('h3').text(player1+" it is your turn, pick a column to drop in!")
 
 
 $('.board button').on('click',function(){
+
+  //Recognize what column was chosen
   var col= $(this).closest("td").index();
 
+//Get back bottom available row to change
   var bottomAvail = checkBottom(col);
   console.log(bottomAvail)
+
+  //Drop the chip in that column at the bottolAvail Row
   changeColor(bottomAvail,col,currentColor);
 
+//Check for a win or a tie
   if(horizontalWinCheck() || verticalWinCheck() || diagonalWinCheck()){
     gameEnd(currentName);
   }
+
+  //If no win or tie, continue to next player
   currentPlayer=currentPlayer * -1;
+
+  //Re-check who the next player is.
   if(currentPlayer===1){
     currentName=player1;
     $('h3').text(currentName+" it is your turn, please pick a column to drop your blue chip.")
